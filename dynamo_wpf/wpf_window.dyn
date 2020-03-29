@@ -1,0 +1,1716 @@
+{
+  "Uuid": "8ae9a65b-f6b2-40ab-b778-a913458d178e",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "wpf_window",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport System\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN[0]\r\n\r\n# 코드를 이 선 아래에 배치\r\n#import clr\r\n#clr.AddReference(\"IronPython.Wpf\")\r\n#from IronPython.Modules import Wpf as wpf\r\n#import wpf\r\nclr.AddReference(\"PresentationFramework\")\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import * \r\nfrom System.Threading import *\r\n\r\ndef app_thread():\r\n\twindow = Window()\r\n\twindow.Title = \"Hello WPF!\"\r\n\tbutton = Controls.Button()\r\n\tbutton.Content = \"Push Me!\"\r\n\tpanel = Controls.StackPanel()\r\n\twindow.Content = panel\r\n\tpanel.Children.Add(button)\r\n\twindow.Show()\r\n\t\r\nif IN[0]:\t\r\n\tthread = Thread(ThreadStart(app_thread))\r\n\t#thread = Thread.ThreadState(app_thread)\r\n\tthread.SetApartmentState(ApartmentState.STA)\r\n\tthread.Start()\r\n\t#thread.Join()\r\n\t\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "VariableInputPorts": true,
+      "Id": "df1df56858f8406d84ff6c06c06b3ae7",
+      "Inputs": [
+        {
+          "Id": "9c61cedafaa04475984ea8632b6cab13",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "681dd394ac2240468b657788939d8a3d",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "7a57d1df96df43d29f12c229388c066b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c35aa234dc3549bc9cc40ad3da407b66",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\noutput = []\r\n# 코드를 이 선 아래에 배치\r\nimport System\r\nclr.AddReference('WindowsBase')\r\nclr.AddReference('System.Windows.Presentation')\r\nfrom System import Action\r\nfrom System.Windows.Threading import DispatcherExtensions, Dispatcher\r\n\r\ndispatcher = Dispatcher.CurrentDispatcher\r\n\r\ndef workCallBack():\r\n\tdef app_thread():\r\n\t\twindow = Window()\r\n\t\twindow.Title = \"Hello WPF!\"\r\n\t\tbutton = Controls.Button()\r\n\t\tbutton.Content = \"Push Me!\"\r\n\t\tpanel = Controls.StackPanel()\r\n\t\twindow.Content = panel\r\n\t\tpanel.Children.Add(button)\r\n\t\twindow.Show()\r\n\tthread = Thread(ThreadStart(app_thread))\r\n\tthread.SetApartmentState(ApartmentState.STA)\r\n\tthread.Start()\r\n\tthread.Join()\r\n\r\nDispatcherExtensions.BeginInvoke(dispatcher, Action(workCallBack))\r\noutput.append(dir(Dispatcher))\r\nOUT = output\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\n#OUT = 0",
+      "VariableInputPorts": true,
+      "Id": "01c8ed1c672e4d22b6aa41f9f7ab8ab4",
+      "Inputs": [
+        {
+          "Id": "c65cee9151964a828833c53e80ddcb02",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2f163b8026be4b198d1baeb81f8f3f67",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\noutput = []\r\n# 코드를 이 선 아래에 배치\r\nimport System\r\nclr.AddReference('WindowsBase')\r\nclr.AddReference('System.Windows.Presentation')\r\nfrom System import Action\r\nfrom System.Threading import *\r\nfrom System.Windows.Threading import DispatcherExtensions, Dispatcher\r\n\r\n#dispatcher = Dispatcher.CurrentDispatcher\r\n\r\n\r\ndef app_thread():\r\n\tdispatcher = Dispatcher.CurrentDispatcher\r\n\tdef workCallBack():\r\n\t\toutput = \" dispatcher\"\t\r\n\tDispatcherExtensions.BeginInvoke(dispatcher, Action(workCallBack))\r\n\r\nthread = Thread(ThreadStart(app_thread))\r\nthread.SetApartmentState(ApartmentState.STA)\r\nthread.Start()\r\n#thread.Join()\r\n\r\n\r\noutput.append(dir(Dispatcher))\r\nOUT = output\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\n#OUT = 0",
+      "VariableInputPorts": true,
+      "Id": "a9f8ffbd9bee441f8bb5cd50588a48d0",
+      "Inputs": [
+        {
+          "Id": "320555ac63b449efab61a43f4e3b4d45",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c673ec5f1bd94263b964005eb62c196b",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport System\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN[0]\r\noutput=''\r\n# 코드를 이 선 아래에 배치\r\n#import clr\r\n#clr.AddReference(\"IronPython.Wpf\")\r\n#from IronPython.Modules import Wpf as wpf\r\n#import wpf\r\nclr.AddReference(\"PresentationFramework\")\r\nfrom System.Windows import * \r\nclr.AddReference('WindowsBase')\r\nclr.AddReference('System.Windows.Presentation')\r\nfrom System import Action\r\nfrom System.Windows.Threading import DispatcherExtensions, Dispatcher\r\n\r\ndispatcher = Dispatcher.CurrentDispatcher\r\n\r\ndef workCallBack():\r\n    print 'working'\r\n    output ='working'\r\n\r\nDispatcherExtensions.BeginInvoke(dispatcher, Action(workCallBack))\r\n\t\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = output",
+      "VariableInputPorts": true,
+      "Id": "7d488377390643e3b0f3c913431c8375",
+      "Inputs": [
+        {
+          "Id": "a1ac1b97360c4d8eabf7e8b998dc3b0b",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a4bc9cd1c61f4aaf9ddf3b4721408cf8",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('IronPython.Wpf')\r\nclr.AddReference('PresentationFramework')\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nimport System\r\nfrom System.IO import File, FileStream, FileMode\r\nfrom System.Windows import *\r\n\r\nfrom System.Windows.Markup import XamlReader\r\n\r\n\r\n\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\n#dataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\nxamlPath = IN[0]\r\n\r\ndef buttonClick(*args):\r\n    window.Close()\r\n\r\nfile = File.OpenRead(xamlPath.ToString())\r\nwindow = XamlReader.Load(file)\r\nbtn = LogicalTreeHelper.FindLogicalNode(window,\"button\")\r\nbtn.Click += buttonClick\r\nwindow.Show()\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "VariableInputPorts": true,
+      "Id": "67acfd0b991843c4a53a166e3c66f58e",
+      "Inputs": [
+        {
+          "Id": "955d1d91ab054f6ca632dd23eed04b33",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "357a748f1ee547629fff292d2c277336",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "51cbfffa6fe644d58fe585ef3dc8a097",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": null,
+      "InputValue": ".\\dynamo_wpf_python_window.xaml",
+      "NodeType": "ExtensionNode",
+      "Id": "080b80f9d21d4fc88d454c0e288e842f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f99e2acb491945d996233bb4ec0109b5",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "시스템에서 파일을 선택하여 파일 이름을 가져올 수 있습니다"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "c653a6e614334fa8b2f2db8feb4cc9ad",
+      "Inputs": [
+        {
+          "Id": "f04779373cf74cb986b86b605393bc71",
+          "Name": "path",
+          "Description": "파일 경로.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9772ed98672846108eed234d1aa9073b",
+          "Name": "file",
+          "Description": "파일 객체",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "경로에서 파일 객체를 만듭니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "6f619cff1f1c48598145a58dc86227a2",
+      "Inputs": [
+        {
+          "Id": "c421d1323e4942328365138e825d5a73",
+          "Name": "",
+          "Description": "평가할 노드.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b839a667d3cd4f08a069e3a768d32e0c",
+          "Name": "",
+          "Description": "내용을 확인합니다.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "노드의 출력을 시각화합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport System\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN[0]\r\n\r\n# 코드를 이 선 아래에 배치\r\n#import clr\r\n#clr.AddReference(\"IronPython.Wpf\")\r\n#from IronPython.Modules import Wpf as wpf\r\n#import wpf\r\nclr.AddReference(\"PresentationFramework\")\r\n#clr.AddReference('WindowsBase')\r\nfrom System.Windows import * \r\n#from System.Threading import *\r\n\r\n\r\nwindow = Window()\r\nwindow.Title = \"Hello WPF!\"\r\nbutton = Controls.Button()\r\nbutton.Content = \"Push Me!  \"+ str(dataEnteringNode)\r\npanel = Controls.StackPanel()\r\nwindow.Content = panel\r\npanel.Children.Add(button)\r\nwindow.Show()\r\n\t\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "VariableInputPorts": true,
+      "Id": "faf4e96492214527b71d089bc6f04732",
+      "Inputs": [
+        {
+          "Id": "761ecdde5d82439b9ed5aa631f826f53",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "90d3d3d7766f4f0d883216cee42797f2",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "52fb9435e53646d5b4128fb021b64e96",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "839e1200aeeb4a8da265504f877fcff3",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "2b0cfda4c216483fb60811fe5ef26f45",
+      "Inputs": [
+        {
+          "Id": "33b7d89e15db41f2b742a910f2b6018a",
+          "Name": "script",
+          "Description": "실행할 Python 스크립트.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0b3e193d1edb474892d257a79ef73e18",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2b7ca919c71e4c3cae66fe8c36a094de",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열에서 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport System\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nclr.AddReference(\"PresentationFramework\")\r\nfrom System.Windows import * \r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN[0]\r\n\r\n# 코드를 이 선 아래에 배치\r\nwindow = Window()\r\nwindow.Title = \"Hello WPF!\"\r\nbutton = Controls.Button()\r\nbutton.Content = \"Push Me!  \"+ str(dataEnteringNode)\r\npanel = Controls.StackPanel()\r\nwindow.Content = panel\r\npanel.Children.Add(button)\r\nwindow.Show()\r\n\t\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "Id": "b8b1706be2e340b5aec48ab3269c4bc1",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "bc101f32b3ad42cc8c3a070234a9f987",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열을 작성합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "75661d2896d64bb68af5009b990f116f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8090bf1a329847338ca7226575d380df",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "3e755962948c4966a9b2a5920fda37ed",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "18097c195dcb445aa579e1f3b250de25",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "efd59fc005e34de6ba5ce7a703814abf",
+      "Inputs": [
+        {
+          "Id": "f3c72c498387486f83a532ea7bb46f3f",
+          "Name": "script",
+          "Description": "실행할 Python 스크립트.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "00237286d9084fe2afbc4a5fef8e3b32",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fb7876d240584560bd805e5352087ab4",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c0fb40fbfe234977939a1d719a37927a",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열에서 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('IronPython.Wpf')\r\nclr.AddReference('PresentationFramework')\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nimport System\r\nfrom System.IO import File, FileStream, FileMode\r\nfrom System.Windows import *\r\n\r\nfrom System.Windows.Markup import XamlReader\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\n#dataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\nxamlPath = IN[0]\r\n\r\ndef buttonClick(*args):\r\n    window.Close()\r\n\r\nfile = File.OpenRead(xamlPath.ToString())\r\nwindow = XamlReader.Load(file)\r\nbtn = LogicalTreeHelper.FindLogicalNode(window,\"button\")\r\nbtn.Click += buttonClick\r\nwindow.Show()\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "Id": "611b1059683b4d86bffe63ab565d024c",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4478be89d5c04c008c4cf1f8e59ef3dd",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열을 작성합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": null,
+      "InputValue": ".\\wpf_window_python.xaml",
+      "NodeType": "ExtensionNode",
+      "Id": "2305f29b542d454792fe91f0acf44765",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8e40b4de87a54cd084fd289a0e4e992d",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "시스템에서 파일을 선택하여 파일 이름을 가져올 수 있습니다"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "60c44f1fba9d4c2f8a7124c28c860c8c",
+      "Inputs": [
+        {
+          "Id": "1ede95e3cb6e432084a4d825adeb0487",
+          "Name": "path",
+          "Description": "파일 경로.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c17d3712afc441228955b15d7a181f72",
+          "Name": "file",
+          "Description": "파일 객체",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "경로에서 파일 객체를 만듭니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "8cfc12e8ddcd44078901ec5d3655be35",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fe7974ceb3f947cdbac0cb7160472dcb",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Id": "add06f40b2c44713aca9aaf85f3dcd7c",
+      "Inputs": [
+        {
+          "Id": "d6a5798985354075a22fad9b34f38808",
+          "Name": "file",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e68cfcd7c23b41839d77b1a69e4214e7",
+          "Name": "str",
+          "Description": "텍스트 파일 내용.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "텍스트 파일을 읽고 내용을 문자열로 반환합니다.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": null,
+      "InputValue": ".\\wpf_window_python.xaml.dynamo.py",
+      "NodeType": "ExtensionNode",
+      "Id": "3b4521813ea9465f9d0a9f0c6e4af995",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "264b7fadd623406e81ac99cca5b5683c",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "시스템에서 파일을 선택하여 파일 이름을 가져올 수 있습니다"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "d4eb79c9adff42fabd31a2dd46015546",
+      "Inputs": [
+        {
+          "Id": "f66e579c669a4ebcbeb18c0963492535",
+          "Name": "path",
+          "Description": "파일 경로.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5e31abb01144428e94143ed1b0990597",
+          "Name": "file",
+          "Description": "파일 객체",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "경로에서 파일 객체를 만듭니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "f36c71c03c934980ae61c72f4ccc760a",
+      "Inputs": [
+        {
+          "Id": "f299ddd07acf4085b3309b82de03509c",
+          "Name": "",
+          "Description": "평가할 노드.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c713709536b144108bacc08a1600c483",
+          "Name": "",
+          "Description": "내용을 확인합니다.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "노드의 출력을 시각화합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "49139c5b0e75454386c01030e9a21c0b",
+      "Inputs": [
+        {
+          "Id": "661756f76087406caa42767e5b6795e0",
+          "Name": "script",
+          "Description": "실행할 Python 스크립트.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1da26ca6f0324c59b8a86e1373f18d70",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3c34631ae6284c82a3d2d7de1955a6c7",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f44dee60769142d8895a6dd8532316bc",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열에서 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "2ec814a3dfbc48ba9513b056bc8d1aca",
+      "Inputs": [
+        {
+          "Id": "2574def655ea472ca7e5f2fb2b12f334",
+          "Name": "",
+          "Description": "평가할 노드.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5797e549b73544b3ad79deca30d72947",
+          "Name": "",
+          "Description": "내용을 확인합니다.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "노드의 출력을 시각화합니다."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Id": "d320e0bc8cfe4f9c8316b60b42698157",
+      "Inputs": [
+        {
+          "Id": "0c10edf2cd8e4a08a9702a80aa439ebc",
+          "Name": "file",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "652c0dadb0b045ce8c0da329233d2a4f",
+          "Name": "str",
+          "Description": "텍스트 파일 내용.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "텍스트 파일을 읽고 내용을 문자열로 반환합니다.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "D:\\code\\dynamo\\wpf\\wpf_window_dynamo.py",
+      "InputValue": ".\\wpf_window_dynamo.py",
+      "NodeType": "ExtensionNode",
+      "Id": "ffbd0e1107234e15a728780f61a967ab",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4a799af735ad4ac6900ee1623b50523f",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "시스템에서 파일을 선택하여 파일 이름을 가져올 수 있습니다"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "4869f68ef4804e37a551fb971aa7cb96",
+      "Inputs": [
+        {
+          "Id": "7312272c7e324ef38e58dfa343ba46b9",
+          "Name": "path",
+          "Description": "파일 경로.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8c60d88ffe024cc5a20703f3f546ea6f",
+          "Name": "file",
+          "Description": "파일 객체",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "경로에서 파일 객체를 만듭니다."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Id": "605bc2922b5444dab7465bf54e960fc0",
+      "Inputs": [
+        {
+          "Id": "7beaf328e0ac46a0bd7f85e4a1875eec",
+          "Name": "file",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "53002ed499964322a1cb19213e125bac",
+          "Name": "str",
+          "Description": "텍스트 파일 내용.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "텍스트 파일을 읽고 내용을 문자열로 반환합니다.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "b84952fdc873405e9028b86f920cc2d8",
+      "Inputs": [
+        {
+          "Id": "e6a33b7eb9c64c62b3dc02e1ab42b42b",
+          "Name": "script",
+          "Description": "실행할 Python 스크립트.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9c251d119cd641a68ef4f5004d49df44",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "89202bcf492a45b09a0978e10c231fcb",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문자열에서 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "57e86fd569f0486087a6d1ac4a61ae12",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1ad786abe0ec4362a7196e28a044c1b6",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "c35aa234dc3549bc9cc40ad3da407b66",
+      "End": "9c61cedafaa04475984ea8632b6cab13",
+      "Id": "ba4f056aa40c49dba0c58317ebf02625"
+    },
+    {
+      "Start": "f99e2acb491945d996233bb4ec0109b5",
+      "End": "f04779373cf74cb986b86b605393bc71",
+      "Id": "6d4b41b765744f3f8d9282b567a2c553"
+    },
+    {
+      "Start": "9772ed98672846108eed234d1aa9073b",
+      "End": "955d1d91ab054f6ca632dd23eed04b33",
+      "Id": "de915f87e0e44883b3eb34e594eecd24"
+    },
+    {
+      "Start": "9772ed98672846108eed234d1aa9073b",
+      "End": "c421d1323e4942328365138e825d5a73",
+      "Id": "94fd722942fc4cc0908e3fc9875307c6"
+    },
+    {
+      "Start": "839e1200aeeb4a8da265504f877fcff3",
+      "End": "761ecdde5d82439b9ed5aa631f826f53",
+      "Id": "328e3675121f4a2fa95e0166b49b31cc"
+    },
+    {
+      "Start": "bc101f32b3ad42cc8c3a070234a9f987",
+      "End": "33b7d89e15db41f2b742a910f2b6018a",
+      "Id": "43942a07621b42f9ac4b9479dc0134a9"
+    },
+    {
+      "Start": "8090bf1a329847338ca7226575d380df",
+      "End": "0b3e193d1edb474892d257a79ef73e18",
+      "Id": "c3ff364de0ad496da26beaca10499ba1"
+    },
+    {
+      "Start": "18097c195dcb445aa579e1f3b250de25",
+      "End": "357a748f1ee547629fff292d2c277336",
+      "Id": "c4afce297aed40b8981299b014ca71ba"
+    },
+    {
+      "Start": "4478be89d5c04c008c4cf1f8e59ef3dd",
+      "End": "f3c72c498387486f83a532ea7bb46f3f",
+      "Id": "e7a99ceb443445ad884790e8da5441fb"
+    },
+    {
+      "Start": "8e40b4de87a54cd084fd289a0e4e992d",
+      "End": "1ede95e3cb6e432084a4d825adeb0487",
+      "Id": "35f952d9c95542fc81ce2243ebbb0efd"
+    },
+    {
+      "Start": "c17d3712afc441228955b15d7a181f72",
+      "End": "00237286d9084fe2afbc4a5fef8e3b32",
+      "Id": "d52ce6fe4c1b489d94a93819d956bc3e"
+    },
+    {
+      "Start": "c17d3712afc441228955b15d7a181f72",
+      "End": "1da26ca6f0324c59b8a86e1373f18d70",
+      "Id": "17901b3a028c4044af41da05b0df489d"
+    },
+    {
+      "Start": "c17d3712afc441228955b15d7a181f72",
+      "End": "0c10edf2cd8e4a08a9702a80aa439ebc",
+      "Id": "d9a7fa73a45d4dbfa529879614c6bf1b"
+    },
+    {
+      "Start": "fe7974ceb3f947cdbac0cb7160472dcb",
+      "End": "fb7876d240584560bd805e5352087ab4",
+      "Id": "e58ae3315f06436fa9ce9d0d8e3bf940"
+    },
+    {
+      "Start": "fe7974ceb3f947cdbac0cb7160472dcb",
+      "End": "3c34631ae6284c82a3d2d7de1955a6c7",
+      "Id": "4bb51ffa8e9b42759f86d164e25ab650"
+    },
+    {
+      "Start": "e68cfcd7c23b41839d77b1a69e4214e7",
+      "End": "f299ddd07acf4085b3309b82de03509c",
+      "Id": "1aeccff1d31f469cb4815b7d3ff67971"
+    },
+    {
+      "Start": "e68cfcd7c23b41839d77b1a69e4214e7",
+      "End": "661756f76087406caa42767e5b6795e0",
+      "Id": "b412bd6980534fc990b8969575db6e64"
+    },
+    {
+      "Start": "264b7fadd623406e81ac99cca5b5683c",
+      "End": "f66e579c669a4ebcbeb18c0963492535",
+      "Id": "8b400913715b48928bf731ea4bcd50a8"
+    },
+    {
+      "Start": "5e31abb01144428e94143ed1b0990597",
+      "End": "d6a5798985354075a22fad9b34f38808",
+      "Id": "6a2f530720924cf2974c3466fdf8fb6f"
+    },
+    {
+      "Start": "652c0dadb0b045ce8c0da329233d2a4f",
+      "End": "2574def655ea472ca7e5f2fb2b12f334",
+      "Id": "1d7f059961ce4cdd827453d78492ba71"
+    },
+    {
+      "Start": "4a799af735ad4ac6900ee1623b50523f",
+      "End": "7312272c7e324ef38e58dfa343ba46b9",
+      "Id": "78a26f1e60d548f5b66af6d9c19cfc9e"
+    },
+    {
+      "Start": "8c60d88ffe024cc5a20703f3f546ea6f",
+      "End": "7beaf328e0ac46a0bd7f85e4a1875eec",
+      "Id": "3cf055c43cca461a948fd804e1229feb"
+    },
+    {
+      "Start": "53002ed499964322a1cb19213e125bac",
+      "End": "e6a33b7eb9c64c62b3dc02e1ab42b42b",
+      "Id": "1471c790780f44b0bd7dc395717c740f"
+    },
+    {
+      "Start": "1ad786abe0ec4362a7196e28a044c1b6",
+      "End": "9c251d119cd641a68ef4f5004d49df44",
+      "Id": "4942b8699033428d8eaf3dd9ab906f11"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "배경 미리보기",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "df1df56858f8406d84ff6c06c06b3ae7",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 452.68771612121714,
+        "Y": -570.90711442340876
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "7a57d1df96df43d29f12c229388c066b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 282.89325720993929,
+        "Y": -569.25485119939049
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "01c8ed1c672e4d22b6aa41f9f7ab8ab4",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1456.3791401415338,
+        "Y": -510.79927432952707
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "a9f8ffbd9bee441f8bb5cd50588a48d0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1107.1185454767021,
+        "Y": -492.94495002580106
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "7d488377390643e3b0f3c913431c8375",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 715.14882745737077,
+        "Y": -570.39198150996208
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "67acfd0b991843c4a53a166e3c66f58e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1583.237600544822,
+        "Y": 50.811492859934106
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "080b80f9d21d4fc88d454c0e288e842f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1132.1894878274181,
+        "Y": 50.0131348560285
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File From Path",
+        "Id": "c653a6e614334fa8b2f2db8feb4cc9ad",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1399.5550471024781,
+        "Y": 50.485342907125187
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "6f619cff1f1c48598145a58dc86227a2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1575.5607961906833,
+        "Y": -83.840120732181958
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "faf4e96492214527b71d089bc6f04732",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 484.32291171431484,
+        "Y": 152.07980060127693
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "52fb9435e53646d5b4128fb021b64e96",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 315.57565309685071,
+        "Y": 151.63766323766822
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "2b0cfda4c216483fb60811fe5ef26f45",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 551.49339828350071,
+        "Y": 379.69483117271977
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "b8b1706be2e340b5aec48ab3269c4bc1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 317.9141272561676,
+        "Y": 379.68866507638205
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "75661d2896d64bb68af5009b990f116f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 319.37358976239534,
+        "Y": 317.48089763311725
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "3e755962948c4966a9b2a5920fda37ed",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1400.5522787662806,
+        "Y": 149.37215236355109
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "efd59fc005e34de6ba5ce7a703814abf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1868.022566046488,
+        "Y": 280.57261270709751
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "611b1059683b4d86bffe63ab565d024c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1150.9823541782309,
+        "Y": 278.97506260402474
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "2305f29b542d454792fe91f0acf44765",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1421.0637641570263,
+        "Y": 717.839589174724
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File From Path",
+        "Id": "60c44f1fba9d4c2f8a7124c28c860c8c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1675.6308848939791,
+        "Y": 717.51189481718927
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "8cfc12e8ddcd44078901ec5d3655be35",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1624.3641004417118,
+        "Y": 832.418884519243
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "FileSystem.ReadText",
+        "Id": "add06f40b2c44713aca9aaf85f3dcd7c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1535.0704968339464,
+        "Y": 1208.2259023619085
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "3b4521813ea9465f9d0a9f0c6e4af995",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1145.2493845016668,
+        "Y": 1210.6375957197076
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File From Path",
+        "Id": "d4eb79c9adff42fabd31a2dd46015546",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1399.8165052386169,
+        "Y": 1210.3099013621729
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "f36c71c03c934980ae61c72f4ccc760a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1833.3171060937657,
+        "Y": 1262.8518648256952
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "49139c5b0e75454386c01030e9a21c0b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1871.1678095313121,
+        "Y": 1014.4905135497431
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "2ec814a3dfbc48ba9513b056bc8d1aca",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2137.1522555152224,
+        "Y": 718.86753616719216
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "FileSystem.ReadText",
+        "Id": "d320e0bc8cfe4f9c8316b60b42698157",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1950.3560940781206,
+        "Y": 717.3132155237472
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "ffbd0e1107234e15a728780f61a967ab",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 149.95065491942159,
+        "Y": 1024.2762213435312
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File From Path",
+        "Id": "4869f68ef4804e37a551fb971aa7cb96",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 404.51777565637258,
+        "Y": 1023.9485269859913
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "FileSystem.ReadText",
+        "Id": "605bc2922b5444dab7465bf54e960fc0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 539.77176725170261,
+        "Y": 1021.8645279857312
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script From String",
+        "Id": "b84952fdc873405e9028b86f920cc2d8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 766.78294837640919,
+        "Y": 1021.0060674614413
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "57e86fd569f0486087a6d1ac4a61ae12",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 562.66511685872138,
+        "Y": 1123.506955576994
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "cb4086e1eb704e4d93f3529186643cb8",
+        "Title": "thread:\r\n    dispatcher",
+        "Nodes": [
+          "a9f8ffbd9bee441f8bb5cd50588a48d0",
+          "f8b772ea749b4e43a75f36779745fa3c",
+          "8880a4bd44844624afedf7d174296509"
+        ],
+        "Left": 1059.6802531520921,
+        "Top": -668.599913423627,
+        "Width": 302.77007286711523,
+        "Height": 268.6549633978259,
+        "FontSize": 36.0,
+        "InitialTop": -572.599913423627,
+        "InitialHeight": 224.6549633978259,
+        "TextblockHeight": 86.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "5184e6bece754050ac7bbf6db4580754",
+        "Title": "dispatcher:\r\n    thread",
+        "Nodes": [
+          "01c8ed1c672e4d22b6aa41f9f7ab8ab4",
+          "e2e15d5ac0ed4ad78943359396fe14f6",
+          "fa35136dd01b480e98cca0e1906715fb"
+        ],
+        "Left": 1422.9597263283831,
+        "Top": -671.3594044879078,
+        "Width": 294.15804548819187,
+        "Height": 253.56013015838073,
+        "FontSize": 36.0,
+        "InitialTop": -575.3594044879078,
+        "InitialHeight": 209.56013015838073,
+        "TextblockHeight": 86.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "ed2b3ebd52ee470c9ddaaa6c01fc9d25",
+        "Title": "dispatcher:",
+        "Nodes": [
+          "7d488377390643e3b0f3c913431c8375",
+          "7511641e32f54d6393e4fbe6de24e543"
+        ],
+        "Left": 701.0128073547271,
+        "Top": -663.82346366556123,
+        "Width": 299.890646564023,
+        "Height": 186.43148215559916,
+        "FontSize": 36.0,
+        "InitialTop": -610.82346366556123,
+        "InitialHeight": 185.43148215559916,
+        "TextblockHeight": 43.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "7b12fa017939443facec3b190db10d37",
+        "Title": "thread:",
+        "Nodes": [
+          "df1df56858f8406d84ff6c06c06b3ae7",
+          "7a57d1df96df43d29f12c229388c066b",
+          "9a8af657edae4a408ba1a071a32e83d2"
+        ],
+        "Left": 272.89325720993929,
+        "Top": -663.15640864545355,
+        "Width": 393.09885299867074,
+        "Height": 185.2492942220448,
+        "FontSize": 36.0,
+        "InitialTop": -610.15640864545355,
+        "InitialHeight": 185.90155744606307,
+        "TextblockHeight": 43.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "26cd111a1f8c4eb5a721efd67a264a1c",
+        "Title": "window = Window()",
+        "Nodes": [
+          "faf4e96492214527b71d089bc6f04732",
+          "52fb9435e53646d5b4128fb021b64e96",
+          "75661d2896d64bb68af5009b990f116f",
+          "b8b1706be2e340b5aec48ab3269c4bc1",
+          "2b0cfda4c216483fb60811fe5ef26f45",
+          "17634334d0c749c0b39d44445b300001",
+          "605bc2922b5444dab7465bf54e960fc0",
+          "ffbd0e1107234e15a728780f61a967ab",
+          "4869f68ef4804e37a551fb971aa7cb96",
+          "b84952fdc873405e9028b86f920cc2d8",
+          "57e86fd569f0486087a6d1ac4a61ae12"
+        ],
+        "Left": 139.95065491942159,
+        "Top": 50.620209472668648,
+        "Width": 807.8322934569876,
+        "Height": 1140.8867461043253,
+        "FontSize": 36.0,
+        "InitialTop": 103.62020947266865,
+        "InitialHeight": 421.07462170005113,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "5174e12e856b40b6a9e5664287910176",
+        "Title": "Dynamo for Revit에서 WPF는 다음 두 줄이면 된다",
+        "Nodes": [
+          "d17b51e916f341c3bc6a501916c3e422",
+          "272bc7c9576e41c1895137097bac2d2d"
+        ],
+        "Left": 139.43738475378433,
+        "Top": -206.91233541374933,
+        "Width": 496.07738426177156,
+        "Height": 192.03302960871576,
+        "FontSize": 36.0,
+        "InitialTop": -110.91233541374933,
+        "InitialHeight": 192.03302960871576,
+        "TextblockHeight": 86.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "f7cd3ffc329947feaed4b45d274a21bf",
+        "Title": "Dynamo SandBox에서 WPF는 Thread, Dispatcher 등으로 연구가 필요하다",
+        "Nodes": [
+          "c24812d37951466fb4f5eae926a01bf9",
+          "7f63c002f5f742eb83a9d88c8dbec8ea"
+        ],
+        "Left": 271.40536497572111,
+        "Top": -906.862137958711,
+        "Width": 540.83377863519308,
+        "Height": 217.22853953680465,
+        "FontSize": 36.0,
+        "InitialTop": -766.862137958711,
+        "InitialHeight": 158.22853953680465,
+        "TextblockHeight": 130.0,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "bf605c6c79b74fd184e8bce05ade2b06",
+        "Title": ".xaml",
+        "Nodes": [
+          "2305f29b542d454792fe91f0acf44765",
+          "60c44f1fba9d4c2f8a7124c28c860c8c",
+          "2ec814a3dfbc48ba9513b056bc8d1aca",
+          "d320e0bc8cfe4f9c8316b60b42698157"
+        ],
+        "Left": 1411.0637641570263,
+        "Top": 664.3132155237472,
+        "Width": 1026.0884913581961,
+        "Height": 289.55432064344495,
+        "FontSize": 36.0,
+        "InitialTop": 717.3132155237472,
+        "InitialHeight": 124.32769435753471,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4b443b724c504257abff36d2c7259446",
+        "Title": ".xaml.dynamo.py",
+        "Nodes": [
+          "add06f40b2c44713aca9aaf85f3dcd7c",
+          "3b4521813ea9465f9d0a9f0c6e4af995",
+          "d4eb79c9adff42fabd31a2dd46015546",
+          "f36c71c03c934980ae61c72f4ccc760a"
+        ],
+        "Left": 1135.2493845016668,
+        "Top": 1155.2259023619085,
+        "Width": 998.06772159209891,
+        "Height": 485.62596246378666,
+        "FontSize": 36.0,
+        "InitialTop": 1208.2259023619085,
+        "InitialHeight": 125.6396356437026,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "9a8af657edae4a408ba1a071a32e83d2",
+        "Title": "window=System.Windows.Window()",
+        "Nodes": [],
+        "Left": 443.99211020861003,
+        "Top": -610.15640864545355,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "7511641e32f54d6393e4fbe6de24e543",
+        "Title": "dispatcher = Dispatcher.CurrentDispatcher",
+        "Nodes": [],
+        "Left": 711.0128073547271,
+        "Top": -610.82346366556123,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "f8b772ea749b4e43a75f36779745fa3c",
+        "Title": "thread = Thread(ThreadStart(app_thread))",
+        "Nodes": [],
+        "Left": 1069.6802531520921,
+        "Top": -572.599913423627,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "e2e15d5ac0ed4ad78943359396fe14f6",
+        "Title": "dispatcher = Dispatcher.CurrentDispatcher",
+        "Nodes": [],
+        "Left": 1432.9597263283831,
+        "Top": -575.3594044879078,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fa35136dd01b480e98cca0e1906715fb",
+        "Title": "thread = Thread(ThreadStart(app_thread))",
+        "Nodes": [],
+        "Left": 1466.117771816575,
+        "Top": -538.40242778803247,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8880a4bd44844624afedf7d174296509",
+        "Title": "dispatcher = Dispatcher.CurrentDispatcher",
+        "Nodes": [],
+        "Left": 1107.4503260192073,
+        "Top": -536.09562468407717,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "17634334d0c749c0b39d44445b300001",
+        "Title": "실행할때 마다 IN[0]에 True, False를 번갈아 입력한다. ",
+        "Nodes": [],
+        "Left": 340.26253082329083,
+        "Top": 103.62020947266865,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "d17b51e916f341c3bc6a501916c3e422",
+        "Title": "Dynamo SandBox에서 WPF 실행이 어렵다. ~~",
+        "Nodes": [],
+        "Left": 360.51476901555588,
+        "Top": -58.879305805033567,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "272bc7c9576e41c1895137097bac2d2d",
+        "Title": "clr.AddReference(\"PresentationFramework\")\r\nfrom System.Windows import * ",
+        "Nodes": [],
+        "Left": 149.43738475378433,
+        "Top": -110.91233541374933,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "c24812d37951466fb4f5eae926a01bf9",
+        "Title": "Dynamo SandBox에서 WPF 실행이 어렵다. ~~~~~~~~~~~~",
+        "Nodes": [],
+        "Left": 281.40536497572111,
+        "Top": -748.6335984219063,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "7f63c002f5f742eb83a9d88c8dbec8ea",
+        "Title": "Dynamo SandBox에서 WPF 실행이 어렵다.~~~~~~~~~~~~\r\n",
+        "Nodes": [],
+        "Left": 571.2391436109142,
+        "Top": -766.862137958711,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -33.178296853395068,
+    "Y": 467.77884461076212,
+    "Zoom": 0.49740736400488827
+  }
+}

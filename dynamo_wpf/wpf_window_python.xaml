@@ -1,0 +1,10 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="226" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
+            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="22,10,0,0" VerticalAlignment="Top" Height="24" Width="147"/>
+        </Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="414,282,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>
