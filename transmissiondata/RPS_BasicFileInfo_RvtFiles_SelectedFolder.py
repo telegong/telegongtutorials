@@ -31,6 +31,7 @@ rvtsBasicFileInfo = []
 
 def rvtBasicFileInfo(rvt):
     basicFileInfo = []
+    basicFileInfo.append(str(rvt))
     bfi = BasicFileInfo.Extract(rvt)
     print bfi.CentralPath
     for i in dir(bfi):
