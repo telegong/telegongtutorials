@@ -1,0 +1,675 @@
+{
+  "Uuid": "bc16e13c-73dd-4599-a582-76502433649e",
+  "IsCustomNode": true,
+  "Category": "3droomtag",
+  "Description": "edit Rhythm.3DRoomTag.dyf",
+  "Name": "3droomtag",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "FamilyType": {
+        "Key": "Revit.Elements.FamilyType",
+        "Value": "RevitNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "ThreeDRoomTag",
+        "TypeName": "Revit.Elements.FamilyType",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "b123f82b537f4c27a6f551b5ae8da54e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f2010253659b4f40bb7de54dbc2292af",
+          "Name": "",
+          "Description": "기호",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "기능 매개변수로, 사용자 노드와 함께 사용합니다.\r\n\r\n유형 및 매개변수의 기본값을 지정할 수 있습니다. 예:\r\n\r\n입력: var[]..[]\r\n값: bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "RunMe",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "7735920014bc4c619b61027f9a3d7629",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "73f65b38a69540608cd6eea99574ad64",
+          "Name": "",
+          "Description": "기호",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "기능 매개변수로, 사용자 노드와 함께 사용합니다.\r\n\r\n유형 및 매개변수의 기본값을 지정할 수 있습니다. 예:\r\n\r\n입력: var[]..[]\r\n값: bool = false"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "#Copyright(c) 2017, john pierson\n# @60secondrevit, http://sixtysecondrevit.com\n\nimport clr\nclr.AddReference('ProtoGeometry')\nfrom Autodesk.DesignScript.Geometry import *\n\n# Import DocumentManager and TransactionManager\nclr.AddReference(\"RevitServices\")\nimport RevitServices\nfrom RevitServices.Persistence import DocumentManager\nfrom RevitServices.Transactions import TransactionManager\n\n# Import RevitAPI\nclr.AddReference(\"RevitAPI\")\nimport Autodesk\nfrom Autodesk.Revit.DB import *\nclr.AddReference(\"RevitNodes\")\n\n\ndoc = DocumentManager.Instance.CurrentDBDocument\nuiapp = DocumentManager.Instance.CurrentUIApplication\napp = uiapp.Application\n\nfrom System.Collections.Generic import *\n\n\n#The inputs to this node will be stored as a list in the IN variable.\ndataEnteringNode = IN\nphase = UnwrapElement(IN[0])\ncollector = FilteredElementCollector(doc)\nrooms = collector.OfCategory(BuiltInCategory.OST_Rooms).ToElements()\n\nroomInstances = []\nif IN[0] == True:\n\tfor i in rooms:\n\t\t\tif i.Area != 0:\n\t\t\t\troomInstances.append(i)\nelse:\n\troomInstances.append(\"set run me to true\")\nOUT = roomInstances",
+      "VariableInputPorts": true,
+      "Id": "0d81dfa22a77490291b65c36b37678c3",
+      "Inputs": [
+        {
+          "Id": "f4dca47ba19042e1a0a9538d16d60e70",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c34f782393494a9088b4b5c444d42697",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 IronPython 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Room.Location",
+      "Id": "dda8753f9ae74fddb9cf50d6df587b61",
+      "Inputs": [
+        {
+          "Id": "ef2c319c2b2e4352aa29350a3aa33e56",
+          "Name": "room",
+          "Description": "Revit.Elements.Room",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3687e4ff1124441a9d82079434a79f82",
+          "Name": "Point",
+          "Description": "Point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "룸 위치 가져오기\n\nRoom.Location: Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.GetParameterValueByName@string",
+      "Id": "3c27cbbfcc8a404a8646a99ed2a99c0e",
+      "Inputs": [
+        {
+          "Id": "d676814fcbb34b28bf25384dee26f634",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c12b3be38d3b405aac619feebe13b7a7",
+          "Name": "parameterName",
+          "Description": "값을 가져오고자 하는 매개변수의 이름.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a9bb165c4cab47d2a848e746fa162d26",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "요소의 매개변수 중 하나의 값을 가져옵니다.\n\nElement.GetParameterValueByName (parameterName: string): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Name\";\n\"이름\";",
+      "Id": "dc95d03d21054ffba21858e9354266a5",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "15ce09c61f804943a0d22bc25bb653c9",
+          "Name": "",
+          "Description": "선 1의 표현식 값",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b486cc6a19d348849c20f6e30ff21c2e",
+          "Name": "",
+          "Description": "선 2의 표현식 값",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "DesignScript 코드를 직접 작성할 수 있습니다"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.FamilyInstance.ByPoint@Revit.Elements.FamilyType,Autodesk.DesignScript.Geometry.Point",
+      "Id": "6fcd7cff3f51484d8650aa1fcf8ab64c",
+      "Inputs": [
+        {
+          "Id": "cc7b3a88374d41f1a19e910da13d7329",
+          "Name": "familyType",
+          "Description": "패밀리 유형. 패밀리 기호라고도 합니다.\n\nFamilyType",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "27cefe8e76e74c49a6798a36069dcdf3",
+          "Name": "point",
+          "Description": "점(미터).\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c4f84e6746e74be98218f0eb7c21a282",
+          "Name": "FamilyInstance",
+          "Description": "FamilyInstance",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "FamilyType(Revit API에서 FamilySymbol로도 알려져 있음)과 전역 공간에서의 해당 좌표가 지정된 Revit FamilyInstance를 배치합니다.\n\nFamilyInstance.ByPoint (familyType: FamilyType, point: Point): FamilyInstance"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Name\";\n\"Number\";",
+      "Id": "df7a36cf3ac7430694543bbe93d8da28",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1ea1a55e43364ed2908614eb86b7765e",
+          "Name": "",
+          "Description": "선 1의 표현식 값",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1787fdc392bc49d08ba91eef88f87735",
+          "Name": "",
+          "Description": "선 2의 표현식 값",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "DesignScript 코드를 직접 작성할 수 있습니다"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Room.Number",
+      "Id": "d98e91d5da974d48b3c06508a878773b",
+      "Inputs": [
+        {
+          "Id": "8314d8e097714be6a817bb027066b290",
+          "Name": "room",
+          "Description": "Revit.Elements.Room",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "55c16d92820f4349a5b4fa4f62339a61",
+          "Name": "string",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "룸 번호 가져오기\n\nRoom.Number: string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.SetParameterByName@string,var",
+      "Id": "cb6f0991f97442b09ba322236e64c939",
+      "Inputs": [
+        {
+          "Id": "e928e603cd7e46e8805a5b8b19b9ddd6",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fac75df318ea4a4697b8b5d2b127c76e",
+          "Name": "parameterName",
+          "Description": "설정할 매개변수의 이름.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4e40769e5ca3428698c5b0f2ad2592d8",
+          "Name": "value",
+          "Description": "값.\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "da7b398232fb40a79d209feb85ec214e",
+          "Name": "Element",
+          "Description": "Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "요소의 매개변수 중 하나를 설정합니다.\n\nElement.SetParameterByName (parameterName: string, value: var): Element"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.SetParameterByName@string,var",
+      "Id": "317246a3910f44209da373b1d41ad6a8",
+      "Inputs": [
+        {
+          "Id": "1f9455b9eebb41c2a99bffaa496e357e",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b9709075445c4e2ab04e71c5d238dc8d",
+          "Name": "parameterName",
+          "Description": "설정할 매개변수의 이름.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "abf06d4be1c844c3a27766eb1c5e069e",
+          "Name": "value",
+          "Description": "값.\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cede9c791fb1467b8ceb58077ff6f0c4",
+          "Name": "Element",
+          "Description": "Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "요소의 매개변수 중 하나를 설정합니다.\n\nElement.SetParameterByName (parameterName: string, value: var): Element"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "ThreeDRoomTags",
+      "Id": "9adf24e9522f47f8a53ad325f69380e9",
+      "Inputs": [
+        {
+          "Id": "4fd750ad69eb40c2baf453fcd530957f",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "함수 출력(사용자 노드와 함께 사용)"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f2010253659b4f40bb7de54dbc2292af",
+      "End": "cc7b3a88374d41f1a19e910da13d7329",
+      "Id": "ae8434b1a5544a2494d4b8d8d42d3499"
+    },
+    {
+      "Start": "73f65b38a69540608cd6eea99574ad64",
+      "End": "f4dca47ba19042e1a0a9538d16d60e70",
+      "Id": "5dacc3b73d6d481fbc885d3afccf3a44"
+    },
+    {
+      "Start": "c34f782393494a9088b4b5c444d42697",
+      "End": "ef2c319c2b2e4352aa29350a3aa33e56",
+      "Id": "d283272d4e2b441ea0a97ccf97579eb7"
+    },
+    {
+      "Start": "c34f782393494a9088b4b5c444d42697",
+      "End": "8314d8e097714be6a817bb027066b290",
+      "Id": "5dc5160818d148d99d27573814607056"
+    },
+    {
+      "Start": "c34f782393494a9088b4b5c444d42697",
+      "End": "d676814fcbb34b28bf25384dee26f634",
+      "Id": "70c288ef4b5c47b587ab3789096eb6ef"
+    },
+    {
+      "Start": "3687e4ff1124441a9d82079434a79f82",
+      "End": "27cefe8e76e74c49a6798a36069dcdf3",
+      "Id": "c5ef1263be8c4be49a64abed8ea14198"
+    },
+    {
+      "Start": "a9bb165c4cab47d2a848e746fa162d26",
+      "End": "abf06d4be1c844c3a27766eb1c5e069e",
+      "Id": "1a33b199fa5f4dbdae77eb000140efff"
+    },
+    {
+      "Start": "b486cc6a19d348849c20f6e30ff21c2e",
+      "End": "c12b3be38d3b405aac619feebe13b7a7",
+      "Id": "803bc32e1f104e1e8afba6dcc6c612f2"
+    },
+    {
+      "Start": "c4f84e6746e74be98218f0eb7c21a282",
+      "End": "e928e603cd7e46e8805a5b8b19b9ddd6",
+      "Id": "297aa83a32d54ee696e971eebfc74407"
+    },
+    {
+      "Start": "1ea1a55e43364ed2908614eb86b7765e",
+      "End": "b9709075445c4e2ab04e71c5d238dc8d",
+      "Id": "90eb6b86463f49b694e0fb9c2c382627"
+    },
+    {
+      "Start": "1787fdc392bc49d08ba91eef88f87735",
+      "End": "fac75df318ea4a4697b8b5d2b127c76e",
+      "Id": "1795b625294f479c8c965a2bcc6d16c1"
+    },
+    {
+      "Start": "55c16d92820f4349a5b4fa4f62339a61",
+      "End": "4e40769e5ca3428698c5b0f2ad2592d8",
+      "Id": "43e70bacc9ef48ec8048dcb3217e770b"
+    },
+    {
+      "Start": "da7b398232fb40a79d209feb85ec214e",
+      "End": "1f9455b9eebb41c2a99bffaa496e357e",
+      "Id": "7c002386fed64e45908aeda3f8441c84"
+    },
+    {
+      "Start": "cede9c791fb1467b8ceb58077ff6f0c4",
+      "End": "4fd750ad69eb40c2baf453fcd530957f",
+      "Id": "d0c1326b10d84478ad58455fb9b13a82"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "배경 미리보기",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "b123f82b537f4c27a6f551b5ae8da54e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 417.0,
+        "Y": 553.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "7735920014bc4c619b61027f9a3d7629",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 474.49893641359813,
+        "Y": 693.15942516019641
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "0d81dfa22a77490291b65c36b37678c3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 710.87035053449654,
+        "Y": 693.15942516019641
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Room.Location",
+        "Id": "dda8753f9ae74fddb9cf50d6df587b61",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1056.5263903614978,
+        "Y": 674.42641302779884
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.GetParameterValueByName",
+        "Id": "3c27cbbfcc8a404a8646a99ed2a99c0e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1002.3962764804965,
+        "Y": 757.612286678599
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "dc95d03d21054ffba21858e9354266a5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 748.1444098649954,
+        "Y": 797.9894228635967
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "FamilyInstance.ByPoint",
+        "Id": "6fcd7cff3f51484d8650aa1fcf8ab64c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1457.8214803004958,
+        "Y": 598.47559585089766
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "df7a36cf3ac7430694543bbe93d8da28",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1564.3649932354019,
+        "Y": 824.46604253539772
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Room.Number",
+        "Id": "d98e91d5da974d48b3c06508a878773b",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1056.5263903614978,
+        "Y": 880.66029234039888
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.SetParameterByName",
+        "Id": "cb6f0991f97442b09ba322236e64c939",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1860.4551775430009,
+        "Y": 828.88334625339849
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.SetParameterByName",
+        "Id": "317246a3910f44209da373b1d41ad6a8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2233.5544860849986,
+        "Y": 729.5447743884979
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Output",
+        "Id": "9adf24e9522f47f8a53ad325f69380e9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2733.5671404410969,
+        "Y": 736.76234732299781
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "2215d168a2264a6e9558add3453f9de1",
+        "Title": "Room locations and parameters.",
+        "Nodes": [
+          "dda8753f9ae74fddb9cf50d6df587b61",
+          "d98e91d5da974d48b3c06508a878773b"
+        ],
+        "Left": 1046.5263903614978,
+        "Top": 644.42641302779884,
+        "Width": 206.0,
+        "Height": 329.23387931260004,
+        "FontSize": 14.0,
+        "InitialTop": 674.42641302779884,
+        "InitialHeight": 329.23387931260004,
+        "TextblockHeight": 20.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "6c667f55760a4044bd2c5d3bf626a249",
+        "Title": "Creates tag and sets parameters.",
+        "Nodes": [
+          "317246a3910f44209da373b1d41ad6a8",
+          "cb6f0991f97442b09ba322236e64c939",
+          "6fcd7cff3f51484d8650aa1fcf8ab64c",
+          "df7a36cf3ac7430694543bbe93d8da28"
+        ],
+        "Left": 1447.8214803004958,
+        "Top": 568.47559585089766,
+        "Width": 1065.7330057845029,
+        "Height": 405.40775040250082,
+        "FontSize": 14.0,
+        "InitialTop": 598.47559585089766,
+        "InitialHeight": 405.40775040250082,
+        "TextblockHeight": 20.0,
+        "Background": "#FFA4E1FF"
+      }
+    ],
+    "X": -269.69212974750451,
+    "Y": -146.55792962642113,
+    "Zoom": 0.78436932804482717
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "Uuid": "d6b01d9f-7898-4b5a-ac05-e553e7a7d71a",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "3DRoomTag",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "DSRevitNodesUI.FamilyTypes, DSRevitNodesUI",
+      "SelectedIndex": 0,
+      "SelectedString": "3dRoomTag:Name, Number",
+      "NodeType": "ExtensionNode",
+      "Id": "dee03d8fe35b4a538c1c2ba112d24d24",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1ab3537bbc96413290022a8d08dfd8b9",
+          "Name": "Family Type",
+          "Description": "선택된 Family Type",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "문서에서 사용할 수 있는 모든 패밀리 유형."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "bc16e13c-73dd-4599-a582-76502433649e",
+      "FunctionType": "Graph",
+      "NodeType": "FunctionNode",
+      "Id": "158b9365d82a4e5e99dbd6e6d90ab96e",
+      "Inputs": [
+        {
+          "Id": "508bea7f5936477aa35590f5276a136c",
+          "Name": "ThreeDRoomTag",
+          "Description": "FamilyType",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "17d0d384a4434e9dbc26b839157a6bc9",
+          "Name": "RunMe",
+          "Description": "bool\n기본값 : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "15b8e36528d0469583df8fcf159d9aec",
+          "Name": "ThreeDRoomTags",
+          "Description": "반환 값",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "edit Rhythm.3DRoomTag.dyf"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "e2c8be7d3b6240398e7b651f2c4d7410",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "14ab874febe84633ba2bbdfd11fd35a9",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1ab3537bbc96413290022a8d08dfd8b9",
+      "End": "508bea7f5936477aa35590f5276a136c",
+      "Id": "6ed7d921cfe247b38a6403d62f37a345"
+    },
+    {
+      "Start": "14ab874febe84633ba2bbdfd11fd35a9",
+      "End": "17d0d384a4434e9dbc26b839157a6bc9",
+      "Id": "42b91cc9d7874e8bb3007a5133d22110"
+    }
+  ],
+  "Dependencies": [
+    "bc16e13c-73dd-4599-a582-76502433649e"
+  ],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.3.0.5885",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "배경 미리보기",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Family Types",
+        "Id": "dee03d8fe35b4a538c1c2ba112d24d24",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 269.0,
+        "Y": 188.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "3droomtag",
+        "Id": "158b9365d82a4e5e99dbd6e6d90ab96e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 617.0,
+        "Y": 275.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "e2c8be7d3b6240398e7b651f2c4d7410",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 380.0,
+        "Y": 357.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}
