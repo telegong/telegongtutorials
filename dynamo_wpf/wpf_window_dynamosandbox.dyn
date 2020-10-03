@@ -1,0 +1,324 @@
+{
+  "Uuid": "63d033c2-f842-451c-b349-49a69e375582",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "wpf_window_dynamosandbox",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "System.Diagnostics": {
+        "Key": "Rhythm.Helpers.System",
+        "Value": "RhythmCore.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\nfrom System.Threading import Thread, ThreadStart, ApartmentState\r\nclr.AddReference('PresentationFramework')\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\n# Initialization Constants\r\nWindow = System.Windows.Window\r\nApplication = System.Windows.Application\r\n\r\ndef appThread():\r\n    my_window = Window()\r\n    my_window.Show()\r\n    \r\nif System.Diagnostics.Process.GetCurrentProcess().ProcessName == \"Revit\":\r\n\tthread = appThread()\r\nelse:\r\n\tthread = Application.Current.Dispatcher.Invoke(appThread)\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "85b665c06d5a45c88691bed14bb41771",
+      "Inputs": [
+        {
+          "Id": "c3fd4bed5db34c1386a00316f3bd18cb",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "537ae729f5c741c482cef77dc085778b",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 Python 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "79108b72439941ceb1f8d9e89d5c6410",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2ab01bdbdb254e8bad31deb39d7ff37a",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "0734cdc891274cf5ad3eecbb7b3bc262",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ec6e83c2ed074b55a579b9dea84fe0c5",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\nfrom System.Threading import Thread, ThreadStart, ApartmentState\r\nclr.AddReference('PresentationFramework')\r\nfrom System.Windows import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\n# Initialization Constants\r\nWindow = System.Windows.Window\r\nApplication = System.Windows.Application\r\ndef appThread():\r\n\twindow = Window()\r\n\twindow.Title = \"Hello WPF!\"\r\n\tbutton = Controls.Button()\r\n\tbutton.Content = \"Push Me!  \"+ str(dataEnteringNode)\r\n\tpanel = Controls.StackPanel()\r\n\twindow.Content = panel\r\n\tpanel.Children.Add(button)\r\n\twindow.Show()\r\nif System.Diagnostics.Process.GetCurrentProcess().ProcessName == \"Revit\":\r\n\tthread = appThread()\r\nelse:\r\n\tthread = Application.Current.Dispatcher.Invoke(appThread)\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "fd6ead257e884e87924313d7022078c5",
+      "Inputs": [
+        {
+          "Id": "17b79d57f0e744e78055788eb5835d3b",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "340add5882854c7aa6fb0c862019c75a",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 Python 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n#import clr\r\n\r\n# Reference the WPF assemblies\r\n#import sys\r\nimport System.Windows\r\nfrom wpf import *\r\nclr.AddReference('PresentationFramework')\r\nclr.AddReference('RevitAPI')\r\nclr.AddReference('RevitAPIUI')\r\nclr.AddReference('RevitServices')\r\n# noinspection PyUnresolvedReferences\r\nfrom Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent\r\n# noinspection PyUnresolvedReferences\r\nfrom Autodesk.Revit.DB import Transaction\r\n# noinspection PyUnresolvedReferences\r\nfrom Autodesk.Revit.Exceptions import InvalidOperationException\r\n\r\nfrom RevitServices import *\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom Autodesk.Revit.UI import *\r\nfrom Autodesk.Revit.UI.Selection import *\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n# Initialization Constants\r\nWindow = System.Windows.Window\r\n\r\n# Simple function we want to run\r\ndef delete_elements():\r\n    t = Transaction(doc, \"Failing script\")\r\n    t.Start()\r\n    for elid in uidoc.Selection.GetElementIds():\r\n        print elid\r\n        doc.Delete(elid)\r\n    t.Commit()\r\n    \r\n# Create a subclass of IExternalEventHandler\r\nclass SimpleEventHandler(IExternalEventHandler):\r\n    \"\"\"\r\n    Simple IExternalEventHandler sample\r\n    \"\"\"\r\n    # __init__ is used to make function from outside of the class to be executed by the handler. \\\r\n    # Instructions could be simply written under Execute method only\r\n    def __init__(self, do_this):\r\n        self.do_this = do_this\r\n    # Execute method run in Revit API environment.\r\n    def Execute(self, uiapp):\r\n        try:\r\n            self.do_this()\r\n        except InvalidOperationException:\r\n            # If you don't catch this exeption Revit may crash.\r\n            print \"InvalidOperationException catched\"\r\n    def GetName(self):\r\n        return \"simple function executed by an IExternalEventHandler in a Form\"\r\n# Now we need to make an instance of this handler. Moreover, it shows that the same class could be used to for\r\n# different functions using different handler class instances\r\nsimple_event_handler = SimpleEventHandler(delete_elements)\r\n# We now need to create the ExternalEvent\r\next_event = ExternalEvent.Create(simple_event_handler)\r\n\r\n# A simple WPF form used to call the ExternalEvent\r\nclass ModelessForm(Window):#WPFWindow):\r\n    \"\"\"\r\n    Simple modeless form sample#\r\n    \"\"\"\r\n    def __init__(self):\r\n        Window.__init__(self)\r\n        self.Title = \"Hello World\"\r\n        self.Show()\r\n    def delete_click(self, sender, e):\r\n        # This Raise() method launch a signal to Revit to tell him you want to do something in the API context\r\n        ext_event.Raise()\r\n# Let's launch our beautiful and useful form !\r\nmodeless_form = ModelessForm()\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = 0",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "434c901f9c884229829a388a209d5880",
+      "Inputs": [
+        {
+          "Id": "f5babbe339404c8093d5a82451b77b0c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7debe35b858a4881ad389370cb9eb7dd",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 Python 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "9468a68fbfae4c0abafbcd9098860363",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "146ea96f434547c48e7fe21aaace0e9f",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = System.Diagnostics.Process.GetCurrentProcess().ProcessName",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "b08074910a0645eb838a381cdab44f2f",
+      "Inputs": [
+        {
+          "Id": "8530e7368857492e9f12a6f99fb9fbba",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bcbed0aa47834541a4c6bccd18b8a51e",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 Python 스크립트를 실행합니다."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2ab01bdbdb254e8bad31deb39d7ff37a",
+      "End": "c3fd4bed5db34c1386a00316f3bd18cb",
+      "Id": "da0656a100ac428d8046fbf17698723b"
+    },
+    {
+      "Start": "ec6e83c2ed074b55a579b9dea84fe0c5",
+      "End": "17b79d57f0e744e78055788eb5835d3b",
+      "Id": "342b488699444c24bbcd954c2da43aa5"
+    },
+    {
+      "Start": "146ea96f434547c48e7fe21aaace0e9f",
+      "End": "f5babbe339404c8093d5a82451b77b0c",
+      "Id": "e652945e707d45328d0970e1f1345611"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.8.0.2471",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "배경 미리보기",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "85b665c06d5a45c88691bed14bb41771",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 434.5,
+        "Y": 236.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "79108b72439941ceb1f8d9e89d5c6410",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 211.0,
+        "Y": 238.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "0734cdc891274cf5ad3eecbb7b3bc262",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 653.0,
+        "Y": 112.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "fd6ead257e884e87924313d7022078c5",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 864.5,
+        "Y": 111.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "434c901f9c884229829a388a209d5880",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 468.5,
+        "Y": 744.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "9468a68fbfae4c0abafbcd9098860363",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 185.0,
+        "Y": 713.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "b08074910a0645eb838a381cdab44f2f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 494.0,
+        "Y": 578.5
+      }
+    ],
+    "Annotations": [],
+    "X": -6.0,
+    "Y": -92.0,
+    "Zoom": 1.0
+  }
+}
