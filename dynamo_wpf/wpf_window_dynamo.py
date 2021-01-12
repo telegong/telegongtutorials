@@ -9,7 +9,7 @@ clr.AddReference('PresentationFramework')
 from System.Windows import *
 
 # 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.
-if __name__== '__main__': IN = True
+if __name__== '__main__': IN = True 
 dataEnteringNode = IN
 
 # 코드를 이 선 아래에 배치

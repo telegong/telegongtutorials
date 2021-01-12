@@ -49,7 +49,7 @@
     {
       "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
       "NodeType": "BooleanInputNode",
-      "InputValue": true,
+      "InputValue": false,
       "Id": "79108b72439941ceb1f8d9e89d5c6410",
       "Inputs": [],
       "Outputs": [
@@ -173,7 +173,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = System.Diagnostics.Process.GetCurrentProcess().ProcessName",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\n\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\n\r\n# 출력을 OUT 변수에 지정합니다.\r\n#OUT = System.Diagnostics.Process.GetCurrentProcess().ProcessName\r\nOUT = __name__",
       "Engine": "IronPython2",
       "VariableInputPorts": true,
       "Id": "b08074910a0645eb838a381cdab44f2f",
@@ -201,6 +201,58 @@
       ],
       "Replication": "Disabled",
       "Description": "포함된 Python 스크립트를 실행합니다."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": false,
+      "Id": "1b617a3812c945c98b0cfb76a93a6f86",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "57c29c8119ca4dd6b98e5f09748584ab",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "True와 False 사이에서 선택."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Python 표준 및 DesignScript 라이브러리 로드\r\nimport sys\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport System.Windows\r\nfrom System.Threading import Thread, ThreadStart, ApartmentState\r\nclr.AddReference('PresentationFramework')\r\nfrom System.Windows import *\r\n\r\nimport wpf\r\n# 이 노드에 대한 입력값은 IN 변수에 리스트로 저장됩니다.\r\ndataEnteringNode = IN\r\n\r\n# 코드를 이 선 아래에 배치\r\nclass MyWindow(Window):\r\n    layout =\"\"\"\r\n\t\t\t<Window xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" \r\n\t\t\t       xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" \r\n\t\t\t       Title=\"WpfApplication1\" Height=\"351\" Width=\"500\">\r\n\t\t\t    <StackPanel Margin=\"5\">\r\n\t\t\t        <Button Margin=\"5\" x:Name=\"Toggle\">Click Me!</Button>\r\n\t\t\t        <Label Margin=\"5\" FontSize=\"48\" x:Name=\"OneTwo\">Two</Label>\r\n\t\t\t    </StackPanel>\r\n\t\t\t</Window>\r\n\t\t\t\"\"\"\r\n    def __init__(self):\r\n        wpf.LoadComponent(self,System.IO.StringReader(MyWindow.layout))# 'WpfApplication1.xaml')\r\n        self.Toggle.Click += self.sayhello\r\n\r\n    def sayhello(self, s,e) :\r\n        if self.OneTwo.Content == \"Two\" :\r\n           self.OneTwo.Content = \"one\" \r\n        else :\r\n          self.OneTwo.Content  = \"Two\"   \r\n# Initialization Constants\r\nWindow = System.Windows.Window\r\nApplication = System.Windows.Application\r\nOUT = 0\r\ndef appThread():\r\n\twin = MyWindow()\r\n\twin.ShowDialog()\r\n\tprint win.OneTwo.Content + '== inside'\r\n\treturn win.OneTwo.Content\r\n\r\nif System.Diagnostics.Process.GetCurrentProcess().ProcessName == \"Revit\":\r\n\tthread = appThread()\r\nelse:\r\n\tthread = Application.Current.Dispatcher.Invoke(appThread)\r\n# 출력을 OUT 변수에 지정합니다.\r\nOUT = thread\r\n#print win.OneTwo.Content + '== outside' # Warning",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "aed5308829144a609491322e7a699e09",
+      "Inputs": [
+        {
+          "Id": "255d0900df7a4452bc73ee5fe369bdeb",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "67f19db618c643e8be772afa8b06cebe",
+          "Name": "OUT",
+          "Description": "Python 스크립트의 결과",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "포함된 Python 스크립트를 실행합니다."
     }
   ],
   "Connectors": [
@@ -218,6 +270,11 @@
       "Start": "146ea96f434547c48e7fe21aaace0e9f",
       "End": "f5babbe339404c8093d5a82451b77b0c",
       "Id": "e652945e707d45328d0970e1f1345611"
+    },
+    {
+      "Start": "57c29c8119ca4dd6b98e5f09748584ab",
+      "End": "255d0900df7a4452bc73ee5fe369bdeb",
+      "Id": "486a279b757d4d269d5c556f5de230cb"
     }
   ],
   "Dependencies": [],
@@ -228,7 +285,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.8.0.2471",
+      "Version": "2.10.0.3455",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -282,7 +339,7 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 864.5,
+        "X": 863.5,
         "Y": 111.5
       },
       {
@@ -314,11 +371,31 @@
         "Excluded": false,
         "X": 494.0,
         "Y": 578.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Boolean",
+        "Id": "1b617a3812c945c98b0cfb76a93a6f86",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1099.0,
+        "Y": 135.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script",
+        "Id": "aed5308829144a609491322e7a699e09",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1309.5,
+        "Y": 134.5
       }
     ],
     "Annotations": [],
-    "X": -6.0,
-    "Y": -92.0,
+    "X": -691.0,
+    "Y": 181.0,
     "Zoom": 1.0
   }
 }
