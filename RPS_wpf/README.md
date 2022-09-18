@@ -15,6 +15,11 @@ revitpythonshell-1.0.1\RequiredLibraries 폴더에서 다음 .dll 들을
 %appdata%/Autodesk/Revit/Addins/2023/RevitPythonShell 폴더로 복사한다.
 - "C:\Users\teleg\AppData\Roaming\Autodesk\Revit\Addins\2023\RevitPythonShell\IronPython.Wpf.dll"
 - "C:\Users\teleg\AppData\Roaming\Autodesk\Revit\Addins\2023\RevitPythonShell\IronPython.SQLite.dll"
+%programfiles(x86)%/RevitPythonShell/2023 폴더로 복사해야 할 수 있다.
+- "C:\Program Files (x86)\RevitPythonShell\2023\IronPython.Wpf.dll"
+- "C:\Program Files (x86)\RevitPythonShell\2023\IronPython.SQLite.dll"
+
+
 
 **Old story**
 
