@@ -1,4 +1,4 @@
-#SelectionAllDoorAndWindow
+#SelectionAllLoadableFamilyInstances
 ### Window WPF with work in Revit
 # https://forum.dynamobim.com/t/window-wpf-with-work-in-revit/73564/7.
 # https://github.com/architecture-building-systems/revitpythonshell/releases/tag/1.0.1 설치용 배포본
