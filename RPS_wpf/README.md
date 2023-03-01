@@ -1,6 +1,26 @@
 # RevitPythonShell WPF
+## import wpf 
 
-## Window WPF with work in Revit
+### RevitPythonShell 2 (IronPython 3.4)
+
+1. RPS Configure.. > You need to add the path where RPS is installed to the SearchPath. 
+>( %APPDATA%\Autodesk\Revit\Addins\2023\RevitPythonShell )
+  <br>Or 
+
+
+```python
+   import os,sys
+   sys.path.append(os.path.join(os.environ['APPDATA'],r'Autodesk\Revit\Addins\2023\RevitPythonShell'))
+```
+
+2. AddReferenceToFile
+```python
+   clr.AddReferenceToFile("IronPython.Wpf.dll") #clr.AddReference("IronPython.Wpf") then Version=2.7.7. ??WHY??
+   import wpf
+```
+> <IronPython.Wpf, Version=**3.4.0.0**, Culture=neutral, PublicKeyToken= ...
+
+### Window WPF with work in Revit (old RevitPythonShell 1..)
 
 https://forum.dynamobim.com/t/window-wpf-with-work-in-revit/73564/7.
 
