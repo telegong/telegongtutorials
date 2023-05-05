@@ -4,13 +4,17 @@
 ### RevitPythonShell 2 (IronPython 3.4)
 
 1. RPS Configure.. > You need to add the path where RPS is installed to the SearchPath. 
->( %APPDATA%\Autodesk\Revit\Addins\2023\RevitPythonShell )
+>( %APPDATA%\Autodesk\Revit\Addins\202x\RevitPythonShell )
   <br>Or 
 
 
 ```python
    import os,sys
-   sys.path.append(os.path.join(os.environ['APPDATA'],r'Autodesk\Revit\Addins\2023\RevitPythonShell'))
+   sys.path.append(\
+	 os.path.expandvars(\
+	 fr'%appdata%\Autodesk\Revit\Addins\{doc.Application.VersionNumber}\RevitPythonShell'))
+   #sys.path.append(os.path.join(os.environ['APPDATA'],r'Autodesk\Revit\Addins\2023\RevitPythonShell'))
+   
 ```
 
 2. AddReferenceToFile
